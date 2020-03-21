@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">我的測試APP</string>
+    <string name="Btn_roll">擲骰子</string>
+    <string name="Btn_clear">清除</string>
+
+</resources>
