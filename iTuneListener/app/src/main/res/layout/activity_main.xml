@@ -9,4 +9,8 @@
     android:padding="@dimen/border_padding"
     tools:context=".MainActivity">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@android:id/list"/>
 </LinearLayout>
