@@ -1,17 +1,24 @@
 package tw.edu.ncku.iim.newsreader
 
+import android.graphics.BitmapFactory
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
 import java.net.URL
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import javax.xml.parsers.SAXParserFactory
 
 class NewsSAX(val listener : ParserListener) : DefaultHandler() {
     private val factory = SAXParserFactory.newInstance()
     private val parser =factory.newSAXParser()
 
+    private val service = Executors.newFixedThreadPool(1) //建立一個執行緒來執行下載照片的動作
+
     private var itemFound=false
     private var titleFound=false
     private var linkFound=false
+    private var imageFound=false
+
 
     private var element:String=""
 
@@ -50,6 +57,16 @@ class NewsSAX(val listener : ParserListener) : DefaultHandler() {
             {
                 linkFound=true
             }
+            else if(localName=="thumbnail")
+            {
+                val url=attributes?.getValue("url")
+
+                service.execute {
+                    val inputStream=URL(url).openStream()
+                    val bitmap=BitmapFactory.decodeStream(inputStream)
+                    listener.setImage(bitmap)
+                }
+            }
         }
 
         element=""
@@ -82,5 +99,17 @@ class NewsSAX(val listener : ParserListener) : DefaultHandler() {
             listener.setLink(element)
             linkFound=false
         }
+    }
+
+    override fun startDocument() {
+        super.startDocument()
+
+        listener.start()
+    }
+
+    override fun endDocument() {
+        super.endDocument()
+
+        listener.finish()
     }
 }
