@@ -33,10 +33,7 @@ class MainActivity : ListActivity() {
         super.onListItemClick(l, v, position, id)
 
         val link=linkList.get(position)
-        val viewIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(link)
-        )
+        val viewIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
         startActivity(viewIntent)
     }
 
