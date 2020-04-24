@@ -1,17 +1,23 @@
 package tw.edu.ncku.iim.itunelistener
 
+import android.graphics.BitmapFactory
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
 import java.net.URL
+import java.util.concurrent.Executors
 import javax.xml.parsers.SAXParserFactory
 
 class iTuneSAX(val listener: ParserListener) : DefaultHandler() {
+
+    private val service = Executors.newFixedThreadPool(1) //建立一個執行緒來執行下載照片的動作
+
     private val factory= SAXParserFactory.newInstance()
     private val parser = factory.newSAXParser()
     //先將XML Paser建立好給所有呼叫此class的物件用
 
     private var entryFound=false
     private var titleFound=false
+    private var imageFound=false
     private var element:String=""
 
     //建立與input網站的連結
@@ -51,6 +57,14 @@ class iTuneSAX(val listener: ParserListener) : DefaultHandler() {
             {
                 titleFound=true
             }
+            else if (localName=="image"&&attributes?.getValue("height")=="170")
+            {
+                imageFound=true
+            }
+            else if(localName=="link"&&attributes?.getValue("type")=="audio/x-m4a")
+            {
+                listener.setLink(attributes?.getValue("href"))
+            }
         }
 
         element=""
@@ -77,6 +91,17 @@ class iTuneSAX(val listener: ParserListener) : DefaultHandler() {
         {
             listener.setTitle(element)
             titleFound=false
+        }
+
+        if (entryFound&&imageFound)
+        {
+            val url=element
+            service.execute {
+                val inputStream=URL(url).openStream()
+                val bitmap= BitmapFactory.decodeStream(inputStream)
+                listener.setImage(bitmap)
+            }
+            imageFound=false
         }
     }
 
