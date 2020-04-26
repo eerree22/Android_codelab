@@ -1,6 +1,7 @@
 package tw.edu.ncku.iim.newsreader
 
 import android.graphics.BitmapFactory
+import android.util.Log
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
 import java.net.URL
@@ -17,7 +18,7 @@ class NewsSAX(val listener : ParserListener) : DefaultHandler() {
     private var itemFound=false
     private var titleFound=false
     private var linkFound=false
-    private var imageFound=false
+    private var descriptionFound=false
 
 
     private var element:String=""
@@ -57,6 +58,10 @@ class NewsSAX(val listener : ParserListener) : DefaultHandler() {
             {
                 linkFound=true
             }
+            else if(qName=="description")
+            {
+                descriptionFound=true
+            }
             else if(localName=="thumbnail")
             {
                 val url=attributes?.getValue("url")
@@ -92,6 +97,12 @@ class NewsSAX(val listener : ParserListener) : DefaultHandler() {
         {
             listener.setTitle(element)
             titleFound=false
+        }
+
+        if (itemFound&&descriptionFound)
+        {
+            listener.setDescription(element)
+            descriptionFound=false
         }
 
         if (itemFound&&linkFound)
