@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PreviewActivity"
+    android:id="@+id/activity_view_info"
     android:orientation="vertical"
     android:gravity="center">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="150dp"
-        android:minWidth="150dp"
+        android:minWidth="100dp"
+        android:minHeight="100dp"
         android:id="@+id/imageView"/>
     <TextView
+        android:paddingTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:id="@+id/textView"
         android:textSize="24sp"/>
 
@@ -29,21 +29,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:gravity="right"
-        android:padding="16dp"
-        android:orientation="horizontal">
+        android:padding="16dp">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Play"
             android:id="@+id/btnPlay"
-            android:onClick="btnPlayOnClick"/>
+            android:layout_alignParentRight="true"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pause"
             android:id="@+id/btnPause"
-            android:onClick="btnPlayOnClick"/>
+            android:layout_toLeftOf="@id/btnPlay"/>
     </LinearLayout>
-
 </LinearLayout>
+

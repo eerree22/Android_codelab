@@ -14,6 +14,8 @@ class newsListAdapter(val context:Context,val titles:List<String>,val images:Lis
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         //load layout
+        Log.i("getView","666666")
+
         val inflater= context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val itemView=inflater.inflate(R.layout.news_list_item,null)
         val imageView:ImageView=itemView.findViewById(R.id.imageView)

@@ -1,6 +1,7 @@
 package tw.edu.ncku.iim.itunelistener
 
 import android.graphics.BitmapFactory
+import android.util.Log
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
 import java.net.URL
@@ -63,7 +64,7 @@ class iTuneSAX(val listener: ParserListener) : DefaultHandler() {
             }
             else if(localName=="link"&&attributes?.getValue("type")=="audio/x-m4a")
             {
-                listener.setLink(attributes?.getValue("href"))
+                listener.setUrl(attributes?.getValue("href"))
             }
         }
 
@@ -99,14 +100,20 @@ class iTuneSAX(val listener: ParserListener) : DefaultHandler() {
             service.execute {
                 val inputStream=URL(url).openStream()
                 val bitmap= BitmapFactory.decodeStream(inputStream)
-                listener.setImage(bitmap)
+                listener.setCover(bitmap)
             }
             imageFound=false
         }
     }
+    override fun startDocument() {
+        super.startDocument()
+        listener.start()
+    }
 
-
-
+    override fun endDocument() {
+        super.endDocument()
+        listener.finish()
+    }
 
 
 }

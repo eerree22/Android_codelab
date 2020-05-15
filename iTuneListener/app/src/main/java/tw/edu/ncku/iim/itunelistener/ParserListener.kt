@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 interface ParserListener {
 
     public fun setTitle(title:String)
-    public fun setLink(link:String)
-    public fun setImage(image: Bitmap)
+    public fun setUrl(link:String)
+    public fun setCover(image: Bitmap)
+    public fun start()
+    public fun finish()
 }
