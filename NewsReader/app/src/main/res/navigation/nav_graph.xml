@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/newsListFragment">
+
+    <fragment
+        android:id="@+id/newsListFragment"
+        android:name="tw.edu.ncku.iim.newsreader.newsListFragment"
+        android:label="newsListFragment" >
+        <action
+            android:id="@+id/action_newsListFragment_to_newsWebviewFragment"
+            app:destination="@id/newsWebviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsWebviewFragment"
+        android:name="tw.edu.ncku.iim.newsreader.newsWebviewFragment"
+        android:label="fragment_news_webview"
+        tools:layout="@layout/fragment_news_webview" >
+        <argument
+            android:name="NewsURL"
+            app:argType="string" />
+    </fragment>
+</navigation>

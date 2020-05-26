@@ -8,25 +8,18 @@
     android:orientation="vertical"
     android:id="@+id/linearLayout"
     android:padding="16dp">
-    <Button
-        android:id="@+id/btnReFlash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="刷新"
-        android:onClick="btnReFlash_OnClick"/>
 
-    <TextView
-        android:id="@+id/textView"
+
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="點擊標題前往新聞頁面" />
-
-    <ListView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@android:id/list">
-</ListView>
-
-
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 
 </LinearLayout>
